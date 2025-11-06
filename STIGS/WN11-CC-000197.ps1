@@ -25,4 +25,27 @@
     PS C:\> .\STIG-ID-WN11-CC-000197.ps1 
 #>
 
-# YOUR CODE GOES HERE
+#Ensure the script runs with administrative privileges
+if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {
+    Write-Host "Please run this PowerShell script as Administrator." -ForegroundColor Red
+    exit
+}
+
+# Define the registry path and value
+$regPath = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\CloudContent"
+$valueName = "DisableWindowsConsumerFeatures"
+$valueData = 1
+
+# Create the key if it doesn’t exist
+if (-not (Test-Path $regPath)) {
+    New-Item -Path $regPath -Force | Out-Null
+    Write-Host "Created registry key: $regPath"
+}
+
+# Create or update the DWORD value
+New-ItemProperty -Path $regPath -Name $valueName -Value $valueData -PropertyType DWord -Force | Out-Null
+Write-Host "Set $valueName to $valueData successfully under $regPath"
+
+# Optional: force a Group Policy update
+gpupdate /force | Out-Null
+Write-Host "Policy updated. Remediation complete." -ForegroundColor Green
