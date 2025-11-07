@@ -22,7 +22,7 @@
 .USAGE
     Put any usage instructions here.
     Example syntax:
-    PS C:\> .\STIG-ID-WN11-CC-000197.ps1 
+    PS C:\> .\__remediation_template(STIG-ID-WN11-CC-000197).ps1 
 #>
 
 #Ensure the script runs with administrative privileges
