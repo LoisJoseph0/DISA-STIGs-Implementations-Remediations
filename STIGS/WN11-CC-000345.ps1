@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    This PowerShell script ensures that
+    This PowerShell script ensures that Basic authentication for WinRM is turned off, so passwords aren’t sent in a reversible form
 
 .NOTES
     Author          : Lois Joseph
